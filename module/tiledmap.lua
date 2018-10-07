@@ -47,7 +47,21 @@ function loadTiledMap(path)
   end
   
   function map:get(x,y)
-    return self.layers[1].data[(math.floor(x/self.tilewidth) + math.floor(y/self.tilewidth) * self.layers[1].width) + 1]
+    return self.layers[1].data[(math.floor(x/self.tilewidth) + math.floor(y/self.tileheight) * self.layers[1].width) + 1]
+  end
+  
+  function map:findSpawn(id)
+    local pos = {}
+    for yy = 0, self.layers[2].height do
+      for xx = 0, self.layers[2].width do
+        if self.layers[2].data[xx + yy * self.layers[2].width] == id then
+          pos.x = xx
+          pos.y = yy
+        end
+      end
+    end
+    
+    return pos
   end
   
   return map

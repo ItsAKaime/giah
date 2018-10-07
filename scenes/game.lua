@@ -1,34 +1,49 @@
-p = require "entities/player"
-Camera = require "module.camera"
-
+p = require "entities.player"
+Camera = require "module.hump.camera"
 game = {}
 
+-- Scene Variables
+entities = {}
+currentZone = "dungeon"
+
 function game:enter()
-  m = loadTiledMap("res/tilemap")
-  p:new(1, 1)
-  camera = Camera(p.x, p.y, 4)
-  camera.smoother = Camera.smooth.damped(10)
+  m = loadTiledMap("res/zones/"..currentZone)
+  pspawn = m:findSpawn(4)
+  
+  p:new(pspawn.x-1,pspawn.y)
+  camera = Camera(p.x, p.y, 5)
 end
 
 function game:update(dt)
-  p:update(dt)
-  camera:lockPosition(p.x, p.y, Camera.smooth.damped(2))
+  for _, entity in ipairs(entities) do
+    entity:update()
+  end
 end
 
 function game:draw()
-  camera:attach()
-  m:draw()
-  p:draw()
-  camera:detach()
+  screen(function ()
+    camera:attach()
+    
+    m:draw()
+  
+    for _, entity in ipairs(entities) do
+      entity:draw()
+    end
+
+    camera:detach()
+  end)
 end
 
 function game:keypressed(key)
+  if key == "escape" then love.event.quit() end
   if p.canMove == true and key == "right" or key == "d" then
     p:setDir(1, 0)
+    p.flip = 0
     p.vx = p.vx + p.speed
     p.canMove = false
   elseif p.canMove == true and key == "left" or key == "a" then
     p:setDir(-1, 0)
+    p.flip = 1
     p.vx = p.vx - p.speed
     p.canMove = false
   elseif p.canMove == true and key == "up" or key == "w" then
