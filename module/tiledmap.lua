@@ -6,7 +6,7 @@ function loadTiledMap(path)
   local tileset = map.tilesets[1]
   
   map.tileset = tileset
-  map.image = love.graphics.newImage(tileset.image)
+  map.image = ts_image
   
   for y = 0, (tileset.imageheight / tileset.tileheight) - 1 do
     for x = 0, (tileset.imagewidth / tileset.tilewidth) - 1 do

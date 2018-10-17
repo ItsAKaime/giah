@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="1.2.0" name="ts_dungeon" tilewidth="16" tileheight="16" tilecount="4" columns="4">
- <image source="../ts_dungeon.png" width="64" height="16"/>
+<tileset version="1.2" tiledversion="1.2.0" name="giah" tilewidth="8" tileheight="8" tilecount="512" columns="16">
+ <image source="../tileset.png" width="128" height="256"/>
 </tileset>
